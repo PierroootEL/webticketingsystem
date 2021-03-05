@@ -4,24 +4,30 @@
 
     require '../core/functions/functions_logs.php';
 
-    require 'assets/header.php';
+    require '../assets/require/header.php';
+
+    require '../assets/require/functions.php';
 
     session_start();
 
-    if (empty($_SESSION['valid_user_connect']) || $_SESSION['valid_user_connect'] !== true || $_SESSION['perm'] == 0) {
+    if (empty($_SESSION['valid_user_connect']) || $_SESSION['valid_user_connect'] !== true) {
         $_SESSION['error'] = "Vous n'avez pas l'autorisation de vous rendre sur cette page !";
         header('Location: ../u/profile.php');
     }
 
     send_log_walk();
 
-    $sql_cats = "SELECT * FROM ticket_cat";
+    // On récupères les tickets que possède l'utilisateur
 
-    $stmt_cats = $pdo->prepare($sql_cats);
+    $sql_get_user_tickets = "SELECT * FROM ticket WHERE username = :username";
 
-    $stmt_cats->execute();
+    $stmt_get_user_tickets = $pdo->prepare($sql_get_user_tickets);
 
-    $cats = $stmt_cats->fetchAll(PDO::FETCH_ASSOC);
+    $stmt_get_user_tickets->bindValue(':username', $_SESSION['username']);
+
+    $stmt_get_user_tickets->execute();
+
+    $result_get_user_tickets = $stmt_get_user_tickets->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <html>
@@ -30,13 +36,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta lang="fr-FR">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/style.css">
     <link rel="stylesheet" type="text/css" href="assets/style.css">
 </head>
 <body>
 <div class="container">
     <section>
-        <h1>Liste de toutes les catégories</h1>
-        <center><a href="category.create.php" style="color: black; font-size:19px;">Créer une catégorie</a></center>
+        <h1>Liste de vos ticket(s)</h1>
+        <center><a href="ticket.create.php" style="color: black; font-size:19px;">Créer un ticket</a></center>
+        <a><?php if (!empty($_SESSION['info'])){ echo $_SESSION['info']; } ?></a>
         <div class="tbl-header">
             <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
@@ -52,12 +60,12 @@
         <div class="tbl-content">
             <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
-                <?php  foreach($cats as $cat){ ?>
+                <?php  foreach($result_get_user_tickets as $user_ticket){ ?>
                     <tr>
-                        <td><a href="category.form.php?id=<?php echo $cat['id']; ?>"><?php if (empty($cat['name'])){ echo "Non renseigné"; }else{ echo $cat['name']; } ?></a></td>
-                        <td><a><?php if (empty($cat['description'])){ echo "Non renseigné"; }else{ echo $cat['description']; } ?></a></td>
-                        <td><a><?php if (empty($cat['active'])){ echo "Non renseigné"; }else{echo $cat['active']; } ?></a></td>
-                        <td><a href="category.del.php?id=<?php echo $cat['id'] ?>">Oui</a></td>
+                        <td><a href="category.form.php?id=<?php echo $user_ticket['id']; ?>"><?php if (empty($user_ticket['name'])){ echo "Non renseigné"; }else{ echo $user_ticket['name']; } ?></a></td>
+                        <td><a><?php if (empty($user_ticket['category'])){ echo "Non renseigné"; }else{ echo $user_ticket['category']; } ?></a></td>
+                        <td><a><?php if (empty($user_ticket['description'])){ echo "Non renseigné"; }else{echo $user_ticket['description']; } ?></a></td>
+                        <td><a href="ticket.del.php?id=<?php echo $user_ticket['id']; ?>">Oui</a></td>
                     </tr>
                 <?php } ?>
                 </tbody>

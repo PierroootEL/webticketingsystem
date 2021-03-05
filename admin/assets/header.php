@@ -51,8 +51,8 @@
 <header>
     <div class="container-header">
         <a href="index.php" class="container-header-left">Interface d'administration</a>
-        <a href="ticket.mod.php" class="container-header-right">Ticket</a>
+        <a href="category.php" class="container-header-right">Catégorie de ticket</a>
         <a href="ban.php" class="container-header-right">Bannissement</a>
-        <a href="adminuser.php" class="container-header-right">Administrer utilisateur</a>
+        <a href="users.php" class="container-header-right">Administrer utilisateurs</a>
     </div>
 </header>

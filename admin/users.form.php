@@ -33,8 +33,6 @@
 
     $get_user = $stmt_get_user->fetch(PDO::FETCH_ASSOC);
 
-    // Vérification que l'ID demandé existe
-
 
     // Récupération des changements
 

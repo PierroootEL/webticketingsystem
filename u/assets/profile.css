@@ -20,5 +20,16 @@ html{
     margin-top: 15px;
 }
 
+.open-ticket{
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 200px;
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+
+
 
 

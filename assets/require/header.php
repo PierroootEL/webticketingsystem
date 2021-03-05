@@ -88,10 +88,10 @@
     </script>
     <header>
         <div class="topnav" id="myTopnav">
-            <a href="#">Profil</a>
-            <a href="#">Voir vos tickets</a>
-            <a href="#">Créer un ticket</a>
-            <a href="#" class="active">Accueil</a>
+            <a href="profile.php">Profil</a>
+            <a href="../ticket/ticket.see.php">Voir vos tickets</a>
+            <a href="../ticket/ticket.create.php">Créer un ticket</a>
+            <a href="../index.php" class="active">Accueil</a>
             <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                 <i class="fa fa-bars"></i>
             </a>
